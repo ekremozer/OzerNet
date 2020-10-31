@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OzerNet.Commands\OzerNet.Commands.csproj" />
+    <ProjectReference Include="..\OzerNet.Dal\OzerNet.Dal.csproj" />
+    <ProjectReference Include="..\OzerNet.Utulity\OzerNet.Utulity.csproj" />
+  </ItemGroup>
+
+</Project>
