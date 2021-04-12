@@ -1,12 +1,12 @@
 ﻿using System;
-using Autofac;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using Autofac;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Concurrent;
-using OzerNet.WepApi.Infrastructure;
 using OzerNet.Commands.Infrastructure;
+using OzerNet.WepApi.Infrastructure;
 
 namespace OzerNet.WepApi.Controllers
 {
@@ -17,7 +17,8 @@ namespace OzerNet.WepApi.Controllers
 
         static ExecuteController()
         {
-            var types = Assembly.GetAssembly(typeof(Command)).DefinedTypes.Where(x => x.BaseType == typeof(Command));
+            var types = Assembly.GetAssembly(typeof(Command))?.DefinedTypes.Where(x => x.BaseType == typeof(Command));
+            if (types == null) return;
             foreach (var type in types)
             {
                 Types[type.Name.ToLowerInvariant()] = type.UnderlyingSystemType;

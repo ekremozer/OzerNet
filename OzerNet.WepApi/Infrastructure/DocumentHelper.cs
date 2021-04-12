@@ -54,7 +54,7 @@ namespace OzerNet.WepApi.Infrastructure
 
                 document?.Commands.Add(new
                 {
-                    Process = describeAttribute.Process.ToString(),
+                    Process = describeAttribute?.Process.ToString(),
                     Description = description,
                     Name = $"{type.Name} {needToken}",
                     Post = inputs

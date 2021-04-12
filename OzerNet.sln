@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.Service", "OzerNet.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.Bll", "OzerNet.Bll\OzerNet.Bll.csproj", "{F0D4B07D-32F6-426A-99FD-14B3E769B958}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.Utulity", "OzerNet.Utulity\OzerNet.Utulity.csproj", "{8017A3B5-436A-4311-A78E-018C1F9E62C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.Utility", "OzerNet.Utility\OzerNet.Utility.csproj", "{8017A3B5-436A-4311-A78E-018C1F9E62C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.WepApi", "OzerNet.WepApi\OzerNet.WepApi.csproj", "{E863A1F4-4E36-480E-9F77-892BD907A050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzerNet.Commands", "OzerNet.Commands\OzerNet.Commands.csproj", "{0D517A51-E42A-4CDD-954B-1577D9B5F71F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OzerNet.Commands", "OzerNet.Commands\OzerNet.Commands.csproj", "{0D517A51-E42A-4CDD-954B-1577D9B5F71F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

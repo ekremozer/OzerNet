@@ -1,6 +1,5 @@
 ﻿using OzerNet.Commands;
 using OzerNet.Commands.Infrastructure;
-using OzerNet.WepApi.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ using OzerNet.Bll.Abstract.Users;
 using OzerNet.Commands.Commands;
 using OzerNet.Commands.Commands.Users;
 using OzerNet.Dal.EntityFrameWork;
-using OzerNet.Utulity.Helper;
+using OzerNet.WepApi.Infrastructure;
 
 namespace OzerNet.WepApi.CommandHandlers
 {

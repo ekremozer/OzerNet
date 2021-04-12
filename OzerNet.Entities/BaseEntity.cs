@@ -5,7 +5,7 @@ using OzerNet.Entities.Users;
 
 namespace OzerNet.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,7 +22,7 @@ namespace OzerNet.Entities
         public virtual bool Active { get; set; }
         public virtual bool Deleted { get; set; }
 
-        public BaseEntity()
+        protected BaseEntity()
         {
             Uid = Guid.NewGuid();
             CreatedBy = null;

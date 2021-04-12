@@ -7,7 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OzerNet.Commands\OzerNet.Commands.csproj" />
     <ProjectReference Include="..\OzerNet.Dal\OzerNet.Dal.csproj" />
-    <ProjectReference Include="..\OzerNet.Utulity\OzerNet.Utulity.csproj" />
+    <ProjectReference Include="..\OzerNet.Utility\OzerNet.Utility.csproj" />
   </ItemGroup>
 
 </Project>

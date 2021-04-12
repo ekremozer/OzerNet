@@ -7,7 +7,7 @@ using OzerNet.Commands.Commands.Users;
 using OzerNet.Commands.Infrastructure;
 using OzerNet.Dal.EntityFrameWork;
 using OzerNet.Service.Abstract.Users;
-using OzerNet.Utulity.Helper;
+using OzerNet.Utility.Helper;
 
 namespace OzerNet.Service.Concrete.Users
 {

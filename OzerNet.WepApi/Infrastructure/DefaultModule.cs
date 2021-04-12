@@ -2,7 +2,7 @@
 
 namespace OzerNet.WepApi.Infrastructure
 {
-    public class DefaultModule : Autofac.Module
+    public class DefaultModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

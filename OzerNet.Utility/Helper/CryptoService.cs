@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace OzerNet.Utulity.Helper
+namespace OzerNet.Utility.Helper
 {
     public static class CryptoService
     {

@@ -2,7 +2,6 @@ using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using OzerNet.WepApi.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,11 +13,15 @@ using OzerNet.Bll.Abstract.Common;
 using OzerNet.Bll.Abstract.Users;
 using OzerNet.Bll.Concrete.Common;
 using OzerNet.Bll.Concrete.Users;
+using OzerNet.Commands.Infrastructure;
 using OzerNet.Entities.Users;
 using OzerNet.Service.Abstract.Common;
 using OzerNet.Service.Abstract.Users;
 using OzerNet.Service.Concrete.Common;
 using OzerNet.Service.Concrete.Users;
+using OzerNet.Utility.Helper;
+using OzerNet.Utility.Infrastructure;
+using OzerNet.WepApi.Infrastructure;
 
 namespace OzerNet.WepApi
 {
@@ -35,15 +38,23 @@ namespace OzerNet.WepApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions().Configure<AppSettings>(Configuration);
-            var options = services.BuildServiceProvider().GetService<IOptions<AppSettings>>().Value;
-            services.AddTransient<IContextFactory>(x => new TheContextFactory(options.ConnectionStrings.Dev));
-            services.AddControllers();
-            services.AddMemoryCache();
+            var options = services?.BuildServiceProvider()?.GetService<IOptions<AppSettings>>()?.Value;
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<ICommonManager, CommonManager>();
-            services.AddScoped<ICommonService, CommonService>();
+            var connectionString = options?.ConnectionStrings?.GetType()?.GetProperty(options.DefaultDbConnection)?.GetValue(options.ConnectionStrings, null)?.ToString();
+            AppParameters.ConnectionString = connectionString;
+            AppParameters.AppSettings = options;
+
+            if (services != null)
+            {
+                services.AddTransient<IContextFactory>(x => new TheContextFactory(connectionString));
+                services.AddControllers();
+                services.AddMemoryCache();
+
+                services.AddScoped<IUserService, UserService>();
+                services.AddScoped<IUserManager, UserManager>();
+                services.AddScoped<ICommonManager, CommonManager>();
+                services.AddScoped<ICommonService, CommonService>();
+            }
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
