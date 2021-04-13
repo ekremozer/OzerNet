@@ -45,4 +45,12 @@ namespace OzerNet.Commands.Infrastructure
         public string Authority { get; set; }
         public string ErrorMessage { get; set; }
     }
+
+    public class CommandCache : Attribute
+    {
+        public int Days { get; set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
+        public int Second { get; set; }
+    }
 }

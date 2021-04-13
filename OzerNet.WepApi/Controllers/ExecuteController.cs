@@ -51,6 +51,14 @@ namespace OzerNet.WepApi.Controllers
             }
             #endregion
 
+            #region GetCache
+            var cacheResult = command.GetCache(out var readFromCache);
+            if (readFromCache)
+            {
+                return cacheResult;
+            }
+            #endregion
+
             #region TokenValidation
             var userToken = Request.Headers["Authorization"];
             var ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -85,6 +93,11 @@ namespace OzerNet.WepApi.Controllers
             #endregion
 
             var result = handler.Handle(command);
+
+            #region SetCache
+            ApiHelper.SetCache(result,command);
+            #endregion
+
             return result;
         }
 

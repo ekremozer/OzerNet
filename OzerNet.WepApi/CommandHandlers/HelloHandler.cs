@@ -49,7 +49,7 @@ namespace OzerNet.WepApi.CommandHandlers
             }
             var result = new
             {
-                Response = $"Hello {command.Name}!"
+                Response = $"Hello {command.Name}! {DateTime.Now:dd.MM.yyyy HH:mm:ss}"
             };
 
             return result;

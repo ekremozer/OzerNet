@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OzerNet.Commands.Infrastructure;
 
 namespace OzerNet.Commands.Commands
 {
     [Describe(Module.User, Process.Create, "Makale listesi"), AuthorizedAttribute]
+    [CommandCache(Minutes = 1)]
     public class Hello : Command
     {
         [RequiredValidation(ErrorMessage = "İsim zorunludur.")]

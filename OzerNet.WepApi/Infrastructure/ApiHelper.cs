@@ -92,5 +92,38 @@ namespace OzerNet.WepApi.Infrastructure
 
             return accessAuthorityError;
         }
+
+        public static object GetCache(this Command command, out bool readFromCache)
+        {
+            var cacheAttribute = command.GetType().GetTypeInfo().GetCustomAttribute<CommandCache>();
+            if (cacheAttribute != null)
+            {
+                var commandProperties = command?.GetType().GetProperties().Where(x => x.DeclaringType?.FullName != "OzerNet.Commands.Infrastructure.Command");
+                var cacheName = command.GetType().Name;
+                cacheName = commandProperties.Select(property => command.GetPropertyValue<string>(property.Name)).Aggregate(cacheName, (current, propertyValue) => current + "-" + propertyValue);
+                var memoryCache = IOC.Container.Resolve<IMemoryCache>();
+                readFromCache = memoryCache.TryGetValue(cacheName, out var commandResponse);
+                if (readFromCache)
+                {
+                    return commandResponse;
+                }
+            }
+            readFromCache = false;
+            return null;
+        }
+
+        public static void SetCache(this object result, Command command)
+        {
+            var cacheAttribute = command.GetType().GetTypeInfo().GetCustomAttribute<CommandCache>();
+            if (cacheAttribute != null)
+            {
+                var timeSpan = new TimeSpan(cacheAttribute.Days, cacheAttribute.Hours, cacheAttribute.Minutes, cacheAttribute.Second);
+                var commandProperties = command?.GetType().GetProperties().Where(x => x.DeclaringType?.FullName != "OzerNet.Commands.Infrastructure.Command");
+                var cacheName = command.GetType().Name;
+                cacheName = commandProperties.Select(property => command.GetPropertyValue<string>(property.Name)).Aggregate(cacheName, (current, propertyValue) => current + "-" + propertyValue);
+                var memoryCache = IOC.Container.Resolve<IMemoryCache>();
+                memoryCache.Set(cacheName, result, timeSpan);
+            }
+        }
     }
 }
