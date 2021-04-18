@@ -52,10 +52,13 @@ namespace OzerNet.WepApi.Controllers
             #endregion
 
             #region GetCache
-            var cacheResult = command.GetCache(out var readFromCache);
-            if (readFromCache)
+            if (command.ClearCache == false)
             {
-                return cacheResult;
+                var cacheResult = command.GetCache(out var readFromCache);
+                if (readFromCache)
+                {
+                    return cacheResult;
+                }
             }
             #endregion
 
@@ -95,7 +98,7 @@ namespace OzerNet.WepApi.Controllers
             var result = handler.Handle(command);
 
             #region SetCache
-            ApiHelper.SetCache(result,command);
+            ApiHelper.SetCache(result, command);
             #endregion
 
             return result;

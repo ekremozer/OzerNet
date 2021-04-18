@@ -28,11 +28,25 @@ namespace OzerNet.WepApi.Infrastructure
 
                 var inputs = new Dictionary<string, string>();
 
-                var excludeProperty = new[] { "PostUrl", "HttpRequest" };
-                foreach (var prop in type.GetProperties().ToList())
+                foreach (var prop in type.GetProperties().Where(x => x.DeclaringType?.FullName != "OzerNet.Commands.Infrastructure.Command").ToList())
                 {
-                    if (excludeProperty.Contains(prop.Name)) continue;
-                    inputs[prop.Name] = prop.PropertyType.Name;
+                    if (prop.PropertyType.Name == "List`1")
+                    {
+                        var listType = prop.PropertyType.GenericTypeArguments.FirstOrDefault()?.Name;
+                        if (!string.IsNullOrEmpty(listType))
+                        {
+                            inputs[prop.Name] = $"List<{listType}>";
+                        }
+                        else
+                        {
+                            inputs[prop.Name] = prop.PropertyType.Name;
+                        }
+                    }
+                    else
+                    {
+                        inputs[prop.Name] = prop.PropertyType.Name;
+                    }
+
                 }
 
                 var needToken = authorizedAttribute == null ? "(Needs_token)" : string.Empty;
@@ -54,9 +68,9 @@ namespace OzerNet.WepApi.Infrastructure
 
                 document?.Commands.Add(new
                 {
+                    Name = $"{type.Name} {needToken}",
                     Process = describeAttribute?.Process.ToString(),
                     Description = description,
-                    Name = $"{type.Name} {needToken}",
                     Post = inputs
                 });
             }

@@ -19,7 +19,6 @@ using OzerNet.Service.Abstract.Common;
 using OzerNet.Service.Abstract.Users;
 using OzerNet.Service.Concrete.Common;
 using OzerNet.Service.Concrete.Users;
-using OzerNet.Utility.Helper;
 using OzerNet.Utility.Infrastructure;
 using OzerNet.WepApi.Infrastructure;
 
@@ -40,7 +39,7 @@ namespace OzerNet.WepApi
             services.AddOptions().Configure<AppSettings>(Configuration);
             var options = services?.BuildServiceProvider()?.GetService<IOptions<AppSettings>>()?.Value;
 
-            var connectionString = options?.ConnectionStrings?.GetType()?.GetProperty(options.DefaultDbConnection)?.GetValue(options.ConnectionStrings, null)?.ToString();
+            var connectionString = options?.ConnectionStrings?.GetType().GetProperty(options.DefaultDbConnection)?.GetValue(options.ConnectionStrings, null)?.ToString();
             AppParameters.ConnectionString = connectionString;
             AppParameters.AppSettings = options;
 

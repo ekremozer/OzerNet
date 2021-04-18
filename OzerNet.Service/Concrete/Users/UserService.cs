@@ -23,19 +23,15 @@ namespace OzerNet.Service.Concrete.Users
         public object GetUser(GetUser command)
         {
             using var context = _contextFactory.Create();
-            var user = context.Users.Include(x => x.UserRole).FirstOrDefault(x => x.Uid == command.Uid);
-
-            if (user == null)
+            var user = context.Users.Include(x => x.UserRole).AsNoTracking().Select(x => new
             {
-                return null;
-            }
+                x.Uid,
+                x.Name,
+                Role = x.UserRole.Name,
+                RoleCode = x.UserRole.Code,
+            }).FirstOrDefault(x => x.Uid == command.Uid);
 
-            return new
-            {
-                user.Name,
-                UserRole = user.UserRole.Name,
-                user.UserRole.Code
-            };
+            return user;
         }
 
         public UserLoginModel Login(Login command)
@@ -43,28 +39,23 @@ namespace OzerNet.Service.Concrete.Users
             using var context = _contextFactory.Create();
             var user = context.Users
                 .Include(x => x.UserRole.RoleAuthorities)
-                .ThenInclude(x => x.ModuleAuthority.Module)
-                .FirstOrDefault(x => x.Email == command.Email && x.Password == CryptoService.ToMd5(command.Password));
+                .ThenInclude(x => x.ModuleAuthority.Module).Where(x => x.Email == command.Email && x.Password == CryptoService.ToMd5(command.Password)).AsNoTracking().Select(x =>
+                    new UserLoginModel
+                    {
+                        Uid = x.Uid,
+                        Name = x.Name,
+                        Email = x.Email,
+                        RoleName = x.UserRole != null ? x.UserRole.Name : string.Empty,
+                        RoleKey = x.UserRole != null ? x.UserRole.Code : string.Empty,
+                        Authorities = (x.UserRole != null && x.UserRole.RoleAuthorities != null) ? x.UserRole.RoleAuthorities.Select(y => new UserLoginAuthority
+                        {
+                            ModuleKey = y.ModuleAuthority.Module.Key,
+                            ModuleAuthorityKey = y.ModuleAuthority.Key
+                        }).ToList() : null
+                    })
+                .FirstOrDefault();
 
-            if (user == null)
-            {
-                return null;
-            }
-            var result = new UserLoginModel
-            {
-                Uid = user.Uid,
-                Name = user.Name,
-                Email = user.Email,
-                RoleName = user.UserRole?.Name,
-                RoleKey = user.UserRole?.Code,
-                Authorities = user.UserRole?.RoleAuthorities?.Select(x => new UserLoginAuthority
-                {
-                    ModuleKey = x.ModuleAuthority.Module.Key,
-                    ModuleAuthorityKey = x.ModuleAuthority.Key
-                }).ToList()
-            };
-
-            return result;
+            return user;
         }
     }
 }

@@ -112,7 +112,7 @@ namespace OzerNet.WepApi.Infrastructure
             return null;
         }
 
-        public static void SetCache(this object result, Command command)
+        public static void SetCache(object result, Command command)
         {
             var cacheAttribute = command.GetType().GetTypeInfo().GetCustomAttribute<CommandCache>();
             if (cacheAttribute != null)

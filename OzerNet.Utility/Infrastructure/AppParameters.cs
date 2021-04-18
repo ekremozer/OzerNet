@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using OzerNet.Utility.Infrastructure;
 
-namespace OzerNet.Utility.Helper
+namespace OzerNet.Utility.Infrastructure
 {
     public class AppParameters
     {
