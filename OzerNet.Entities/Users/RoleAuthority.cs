@@ -7,9 +7,9 @@ namespace OzerNet.Entities.Users
 {
     public class RoleAuthority : BaseEntity
     {
-        public virtual UserRole UserRole { get; set; }
-        public virtual Guid? UserRoleUid { get; set; }
-        public virtual ModuleAuthority ModuleAuthority { get; set; }
-        public virtual Guid ModuleAuthorityUid { get; set; }
+        public UserRole UserRole { get; set; }
+        public int? UserRoleId { get; set; }
+        public ModuleAuthority ModuleAuthority { get; set; }
+        public int? ModuleAuthorityId { get; set; }
     }
 }

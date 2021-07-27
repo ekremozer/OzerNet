@@ -20,7 +20,7 @@ namespace OzerNet.Bll.Concrete.Users
 
         public object GetUser(GetUser command)
         {
-            var readFromCache = _memoryCache.TryGetValue(command.Uid, out var user);
+            var readFromCache = _memoryCache.TryGetValue(command.Id, out var user);
             if (readFromCache && !command.ClearCache)
             {
                 return user;
@@ -30,7 +30,7 @@ namespace OzerNet.Bll.Concrete.Users
             {
                 return new CommandResponse("User not found", false);
             }
-            _memoryCache.Set(command.Uid, user, new MemoryCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) });
+            _memoryCache.Set(command.Id, user, new MemoryCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) });
             return new CommandResponse("User Info", user);
         }
 

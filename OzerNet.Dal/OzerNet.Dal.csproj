@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OzerNet.Entities\OzerNet.Entities.csproj" />
+    <ProjectReference Include="..\OzerNet.Utility\OzerNet.Utility.csproj" />
   </ItemGroup>
 
 </Project>

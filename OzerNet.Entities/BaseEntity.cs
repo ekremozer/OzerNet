@@ -9,22 +9,21 @@ namespace OzerNet.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual Guid Uid { get; set; }
-        public virtual DateTime CreatedDate { get; set; }
-        public virtual Guid? CreatedBy { get; set; }
-        public virtual User CreatedByUser { get; set; }
-        public virtual DateTime? UpdatedDate { get; set; }
-        public virtual Guid? UpdatedBy { get; set; }
-        public virtual User UpdatedByUser { get; set; }
-        public virtual DateTime? DeletedDate { get; set; }
-        public virtual Guid? DeletedBy { get; set; }
-        public virtual User DeletedByUser { get; set; }
-        public virtual bool Active { get; set; }
-        public virtual bool Deleted { get; set; }
+        public int Id { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? CreatedBy { get; set; }
+        public User CreatedByUser { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? UpdatedBy { get; set; }
+        public User UpdatedByUser { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public int? DeletedBy { get; set; }
+        public User DeletedByUser { get; set; }
+        public bool Active { get; set; }
+        public bool Deleted { get; set; }
 
         protected BaseEntity()
         {
-            Uid = Guid.NewGuid();
             CreatedBy = null;
             CreatedDate = DateTime.Now;
             UpdatedDate = null;

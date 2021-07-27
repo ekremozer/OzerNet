@@ -12,8 +12,8 @@ namespace OzerNet.Dal.EntityFrameWork
         {
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasIndex(x => x.Uid).HasName("user_Uid").IsUnique(true);
-                entity.HasOne(x => x.UserRole).WithMany(x => x.Users).HasForeignKey(x => x.UserRoleUid);
+                //entity.HasIndex(x => x.Id).HasName("user_Id").IsUnique();
+                entity.HasOne(x => x.UserRole).WithMany(x => x.Users).HasForeignKey(x => x.UserRoleId);
                 entity.HasOne(x => x.CreatedByUser).WithMany(x => x.CreatedUsers).HasForeignKey(x => x.CreatedBy);
                 entity.HasOne(x => x.UpdatedByUser).WithMany(x => x.UpdatedUsers).HasForeignKey(x => x.UpdatedBy);
                 entity.HasOne(x => x.DeletedByUser).WithMany(x => x.DeletedUsers).HasForeignKey(x => x.DeletedBy);
@@ -22,7 +22,7 @@ namespace OzerNet.Dal.EntityFrameWork
 
             modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.HasIndex(x => x.Uid).HasName("userRole_Uid").IsUnique(true);
+                //entity.HasIndex(x => x.Id).HasName("userRole_Id").IsUnique();
                 entity.HasOne(x => x.CreatedByUser).WithMany(x => x.CreatedUserRoles).HasForeignKey(x => x.CreatedBy);
                 entity.HasOne(x => x.UpdatedByUser).WithMany(x => x.UpdatedUserRoles).HasForeignKey(x => x.UpdatedBy);
                 entity.HasOne(x => x.DeletedByUser).WithMany(x => x.DeletedUserRoles).HasForeignKey(x => x.DeletedBy);
@@ -31,7 +31,7 @@ namespace OzerNet.Dal.EntityFrameWork
 
             modelBuilder.Entity<Module>(entity =>
             {
-                entity.HasIndex(x => x.Uid).HasName("module_Uid").IsUnique(true);
+                //entity.HasIndex(x => x.Id).HasName("module_Id").IsUnique();
                 entity.HasOne(x => x.CreatedByUser).WithMany(x => x.CreatedUserModules).HasForeignKey(x => x.CreatedBy);
                 entity.HasOne(x => x.UpdatedByUser).WithMany(x => x.UpdatedUserModules).HasForeignKey(x => x.UpdatedBy);
                 entity.HasOne(x => x.DeletedByUser).WithMany(x => x.DeletedUserModules).HasForeignKey(x => x.DeletedBy);
@@ -40,8 +40,8 @@ namespace OzerNet.Dal.EntityFrameWork
 
             modelBuilder.Entity<ModuleAuthority>(entity =>
             {
-                entity.HasIndex(x => x.Uid).HasName("moduleAuthority_Uid").IsUnique(true);
-                entity.HasOne(x => x.Module).WithMany(x => x.ModuleAuthorities).HasForeignKey(x => x.ModuleUid);
+                //entity.HasIndex(x => x.Id).HasName("moduleAuthority_Id").IsUnique();
+                entity.HasOne(x => x.Module).WithMany(x => x.ModuleAuthorities).HasForeignKey(x => x.ModuleId);
                 entity.HasOne(x => x.CreatedByUser).WithMany(x => x.CreatedUserModuleAuthorities).HasForeignKey(x => x.CreatedBy);
                 entity.HasOne(x => x.UpdatedByUser).WithMany(x => x.UpdatedUserModuleAuthorities).HasForeignKey(x => x.UpdatedBy);
                 entity.HasOne(x => x.DeletedByUser).WithMany(x => x.DeletedUserModuleAuthorities).HasForeignKey(x => x.DeletedBy);
@@ -50,9 +50,9 @@ namespace OzerNet.Dal.EntityFrameWork
 
             modelBuilder.Entity<RoleAuthority>(entity =>
             {
-                entity.HasIndex(x => x.Uid).HasName("roleAuthority_Uid").IsUnique(true);
-                entity.HasOne(x => x.UserRole).WithMany(x => x.RoleAuthorities).HasForeignKey(x => x.UserRoleUid);
-                entity.HasOne(x => x.ModuleAuthority).WithMany(x => x.RoleAuthorities).HasForeignKey(x => x.ModuleAuthorityUid);
+                //entity.HasIndex(x => x.Id).HasName("roleAuthority_Id").IsUnique();
+                entity.HasOne(x => x.UserRole).WithMany(x => x.RoleAuthorities).HasForeignKey(x => x.UserRoleId);
+                entity.HasOne(x => x.ModuleAuthority).WithMany(x => x.RoleAuthorities).HasForeignKey(x => x.ModuleAuthorityId);
                 entity.HasOne(x => x.CreatedByUser).WithMany(x => x.CreatedUserRoleAuthorities).HasForeignKey(x => x.CreatedBy);
                 entity.HasOne(x => x.UpdatedByUser).WithMany(x => x.UpdatedUserRoleAuthorities).HasForeignKey(x => x.UpdatedBy);
                 entity.HasOne(x => x.DeletedByUser).WithMany(x => x.DeletedUserRoleAuthorities).HasForeignKey(x => x.DeletedBy);

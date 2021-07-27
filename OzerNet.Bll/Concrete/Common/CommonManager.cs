@@ -18,7 +18,7 @@ namespace OzerNet.Bll.Concrete.Common
         {
             if (command.Password != password)
             {
-                return new CommandResponse("Failed", false);
+               // return new CommandResponse("Failed", false);
             }
 
             var serviceResponse = _commonService.CreateDatabase(command, connectionString);

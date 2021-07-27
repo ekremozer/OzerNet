@@ -7,6 +7,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using OzerNet.Dal.EntityFrameWork;
 using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OzerNet.Bll.Abstract.Common;
@@ -14,6 +15,8 @@ using OzerNet.Bll.Abstract.Users;
 using OzerNet.Bll.Concrete.Common;
 using OzerNet.Bll.Concrete.Users;
 using OzerNet.Commands.Infrastructure;
+using OzerNet.Dal.EntityFrameWork.Base;
+using OzerNet.Dal.EntityFrameWork.MsSql;
 using OzerNet.Entities.Users;
 using OzerNet.Service.Abstract.Common;
 using OzerNet.Service.Abstract.Users;
@@ -39,13 +42,14 @@ namespace OzerNet.WepApi
             services.AddOptions().Configure<AppSettings>(Configuration);
             var options = services?.BuildServiceProvider()?.GetService<IOptions<AppSettings>>()?.Value;
 
-            var connectionString = options?.ConnectionStrings?.GetType().GetProperty(options.DefaultDbConnection)?.GetValue(options.ConnectionStrings, null)?.ToString();
+            //var connectionString = options?.ConnectionStrings?.GetType().GetProperty(options.DefaultDbConnection)?.GetValue(options.ConnectionStrings, null)?.ToString();
+            var connectionString = options?.ConnectionStrings.FirstOrDefault(x => x.Name == options.DefaultDbConnection)?.Value;
             AppParameters.ConnectionString = connectionString;
             AppParameters.AppSettings = options;
 
             if (services != null)
             {
-                services.AddTransient<IContextFactory>(x => new TheContextFactory(connectionString));
+                services.AddTransient<IContextFactory>(x => new ContextFactory<PostgreSqlContext>());
                 services.AddControllers();
                 services.AddMemoryCache();
 

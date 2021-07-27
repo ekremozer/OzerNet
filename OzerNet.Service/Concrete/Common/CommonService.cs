@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using OzerNet.Commands.Commands.Common;
 using OzerNet.Dal.EntityFrameWork;
+using OzerNet.Dal.EntityFrameWork.Base;
 using OzerNet.Entities.Users;
 using OzerNet.Entities.Users;
 using OzerNet.Service.Abstract.Common;
@@ -23,10 +24,9 @@ namespace OzerNet.Service.Concrete.Common
         {
             try
             {
-                using var context = new EfContext(connectionString);
+                using var context = _contextFactory.Create();
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-
                 if (command.CreateBaseData)
                 {
                     var created = CreateBaseData();
@@ -59,16 +59,17 @@ namespace OzerNet.Service.Concrete.Common
                 Phone = "5444444444",
                 Password = CryptoService.ToMd5("123"),
                 BirthDate = new DateTime(1989, 9, 15),
-                UserRoleUid = userAdminRole.Uid
+                UserRoleId = userAdminRole.Id
             };
-            userAdmin.CreatedBy = userAdmin.Uid;
-
             context.Users.Add(userAdmin);
+            context.SaveChanges();
+
+            userAdmin.CreatedBy = userAdmin.Id;
             context.SaveChanges();
             #endregion
 
             #region UserRoleUpdate
-            userAdminRole.CreatedBy = userAdmin.Uid;
+            userAdminRole.CreatedBy = userAdmin.Id;
             context.SaveChanges();
             #endregion
 
@@ -78,7 +79,7 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User",
                 Key = "user",
-                CreatedBy = userAdmin.Uid
+                CreatedBy = userAdmin.Id
             };
             context.Modules.Add(userModule);
             context.SaveChanges();
@@ -91,8 +92,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Create",
                 Key = "UC",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(userModuleCreateAuthority);
             context.SaveChanges();
@@ -101,8 +102,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Read",
                 Key = "UR",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(userModuleReadAuthority);
             context.SaveChanges();
@@ -111,8 +112,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Update",
                 Key = "UU",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(userModuleUpdateAuthority);
             context.SaveChanges();
@@ -121,8 +122,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Delete",
                 Key = "UD",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(userModuleDeleteAuthority);
             context.SaveChanges();
@@ -133,8 +134,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Role Create",
                 Key = "URC",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(roleModuleCreateAuthority);
             context.SaveChanges();
@@ -143,8 +144,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Role Read",
                 Key = "URR",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(roleModuleReadAuthority);
             context.SaveChanges();
@@ -153,8 +154,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Role Update",
                 Key = "URU",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(roleModuleUpdateAuthority);
             context.SaveChanges();
@@ -163,8 +164,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "User Role Delete",
                 Key = "URD",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(roleModuleDeleteAuthority);
             context.SaveChanges();
@@ -175,8 +176,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "Authority Create",
                 Key = "AC",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(authorityModuleCreateAuthority);
             context.SaveChanges();
@@ -185,8 +186,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "Authority Read",
                 Key = "AR",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(authorityModuleReadAuthority);
             context.SaveChanges();
@@ -195,8 +196,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "Authority Update",
                 Key = "AU",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(authorityModuleUpdateAuthority);
             context.SaveChanges();
@@ -205,8 +206,8 @@ namespace OzerNet.Service.Concrete.Common
             {
                 Name = "Authority Delete",
                 Key = "D",
-                ModuleUid = userModule.Uid,
-                CreatedBy = userAdmin.Uid
+                ModuleId = userModule.Id,
+                CreatedBy = userAdmin.Id
             };
             context.ModuleAuthorities.Add(authorityModuleDeleteAuthority);
             context.SaveChanges();
@@ -217,36 +218,36 @@ namespace OzerNet.Service.Concrete.Common
             #region UserModuleRoleAuthority
             var userCreateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = userModuleCreateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = userModuleCreateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(userCreateRoleAuthority);
             context.SaveChanges();
 
             var userReadRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = userModuleReadAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = userModuleReadAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(userReadRoleAuthority);
             context.SaveChanges();
 
             var userUpdateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = userModuleUpdateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = userModuleUpdateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(userUpdateRoleAuthority);
             context.SaveChanges();
 
             var userDeleteRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = userModuleDeleteAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = userModuleDeleteAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(userDeleteRoleAuthority);
             context.SaveChanges();
@@ -255,36 +256,36 @@ namespace OzerNet.Service.Concrete.Common
             #region RoleModuleRoleAuthority
             var roleCreateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = roleModuleCreateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = roleModuleCreateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(roleCreateRoleAuthority);
             context.SaveChanges();
 
             var roleReadRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = roleModuleReadAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = roleModuleReadAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(roleReadRoleAuthority);
             context.SaveChanges();
 
             var roleUpdateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = roleModuleUpdateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = roleModuleUpdateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(roleUpdateRoleAuthority);
             context.SaveChanges();
 
             var roleDeleteRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = roleModuleDeleteAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = roleModuleDeleteAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(roleDeleteRoleAuthority);
             context.SaveChanges();
@@ -293,36 +294,36 @@ namespace OzerNet.Service.Concrete.Common
             #region AuthorityMoludeRoleAuthority
             var authorityCreateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = authorityModuleCreateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = authorityModuleCreateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(authorityCreateRoleAuthority);
             context.SaveChanges();
 
             var authorityReadRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = authorityModuleReadAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = authorityModuleReadAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(authorityReadRoleAuthority);
             context.SaveChanges();
 
             var authorityUpdateRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = authorityModuleUpdateAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = authorityModuleUpdateAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(authorityUpdateRoleAuthority);
             context.SaveChanges();
 
             var authorityDeleteRoleAuthority = new RoleAuthority
             {
-                UserRoleUid = userAdminRole.Uid,
-                ModuleAuthorityUid = authorityModuleDeleteAuthority.Uid,
-                CreatedBy = userAdmin.Uid
+                UserRoleId = userAdminRole.Id,
+                ModuleAuthorityId = authorityModuleDeleteAuthority.Id,
+                CreatedBy = userAdmin.Id
             };
             context.RoleAuthorities.Add(authorityDeleteRoleAuthority);
             context.SaveChanges();

@@ -1,16 +1,12 @@
 ﻿using OzerNet.Entities;
 using Microsoft.EntityFrameworkCore;
 using OzerNet.Entities.Users;
+using OzerNet.Utility.Infrastructure;
 
-namespace OzerNet.Dal.EntityFrameWork
+namespace OzerNet.Dal.EntityFrameWork.Base
 {
     public class EfContext : DbContext
     {
-        private readonly string _connectionString;
-        public EfContext(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Module> Modules { get; set; }
@@ -19,8 +15,8 @@ namespace OzerNet.Dal.EntityFrameWork
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(_connectionString);
-            optionsBuilder.UseNpgsql(_connectionString);
+            optionsBuilder.UseSqlServer(AppParameters.ConnectionString);
+            //optionsBuilder.UseNpgsql(AppParameters.ConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

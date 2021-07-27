@@ -6,7 +6,7 @@ namespace OzerNet.Commands.Infrastructure
 {
     public class UserLoginModel
     {
-        public Guid Uid { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string RoleName { get; set; }

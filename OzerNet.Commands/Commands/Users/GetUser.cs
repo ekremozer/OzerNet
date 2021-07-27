@@ -9,6 +9,6 @@ namespace OzerNet.Commands.Commands.Users
     [AccessAuthorityAttribute(Module = "user", Authority = "UR", ErrorMessage = "Kullanıcı bilgisi görme yetkiniz yoktur.")]
     public class GetUser : Command
     {
-        public Guid Uid { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OzerNet.Commands.Commands.Users;
 using OzerNet.Commands.Infrastructure;
 using OzerNet.Dal.EntityFrameWork;
+using OzerNet.Dal.EntityFrameWork.Base;
 using OzerNet.Service.Abstract.Users;
 using OzerNet.Utility.Helper;
 
@@ -25,11 +26,11 @@ namespace OzerNet.Service.Concrete.Users
             using var context = _contextFactory.Create();
             var user = context.Users.Include(x => x.UserRole).AsNoTracking().Select(x => new
             {
-                x.Uid,
+                x.Id,
                 x.Name,
                 Role = x.UserRole.Name,
                 RoleCode = x.UserRole.Code,
-            }).FirstOrDefault(x => x.Uid == command.Uid);
+            }).FirstOrDefault(x => x.Id == command.Id);
 
             return user;
         }
@@ -42,7 +43,7 @@ namespace OzerNet.Service.Concrete.Users
                 .ThenInclude(x => x.ModuleAuthority.Module).Where(x => x.Email == command.Email && x.Password == CryptoService.ToMd5(command.Password)).AsNoTracking().Select(x =>
                     new UserLoginModel
                     {
-                        Uid = x.Uid,
+                        Id = x.Id,
                         Name = x.Name,
                         Email = x.Email,
                         RoleName = x.UserRole != null ? x.UserRole.Name : string.Empty,

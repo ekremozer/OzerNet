@@ -6,35 +6,35 @@ namespace OzerNet.Entities.Users
 {
     public class User : BaseEntity
     {
-        public virtual string Name { get; set; }
-        public virtual string Surname { get; set; }
-        public virtual string Email { get; set; }
-        public virtual string Phone { get; set; }
-        public virtual string Password { get; set; }
-        public virtual DateTime BirthDate { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Password { get; set; }
+        public DateTime BirthDate { get; set; }
 
-        public virtual Guid UserRoleUid { get; set; }
-        public virtual UserRole UserRole { get; set; }
+        public int? UserRoleId{ get; set; }
+        public UserRole UserRole { get; set; }
 
-        public virtual ICollection<User> CreatedUsers { get; set; }
-        public virtual ICollection<User> UpdatedUsers { get; set; }
-        public virtual ICollection<User> DeletedUsers { get; set; }
+        public ICollection<User> CreatedUsers { get; set; }
+        public ICollection<User> UpdatedUsers { get; set; }
+        public ICollection<User> DeletedUsers { get; set; }
 
-        public virtual ICollection<UserRole> CreatedUserRoles { get; set; }
-        public virtual ICollection<UserRole> UpdatedUserRoles { get; set; }
-        public virtual ICollection<UserRole> DeletedUserRoles { get; set; }
+        public ICollection<UserRole> CreatedUserRoles { get; set; }
+        public ICollection<UserRole> UpdatedUserRoles { get; set; }
+        public ICollection<UserRole> DeletedUserRoles { get; set; }
 
-        public virtual ICollection<Module> CreatedUserModules { get; set; }
-        public virtual ICollection<Module> UpdatedUserModules { get; set; }
-        public virtual ICollection<Module> DeletedUserModules { get; set; }
+        public ICollection<Module> CreatedUserModules { get; set; }
+        public ICollection<Module> UpdatedUserModules { get; set; }
+        public ICollection<Module> DeletedUserModules { get; set; }
 
-        public virtual ICollection<ModuleAuthority> CreatedUserModuleAuthorities { get; set; }
-        public virtual ICollection<ModuleAuthority> UpdatedUserModuleAuthorities { get; set; }
-        public virtual ICollection<ModuleAuthority> DeletedUserModuleAuthorities { get; set; }
+        public ICollection<ModuleAuthority> CreatedUserModuleAuthorities { get; set; }
+        public ICollection<ModuleAuthority> UpdatedUserModuleAuthorities { get; set; }
+        public ICollection<ModuleAuthority> DeletedUserModuleAuthorities { get; set; }
 
-        public virtual ICollection<RoleAuthority> CreatedUserRoleAuthorities { get; set; }
-        public virtual ICollection<RoleAuthority> UpdatedUserRoleAuthorities { get; set; }
-        public virtual ICollection<RoleAuthority> DeletedUserRoleAuthorities { get; set; }
+        public ICollection<RoleAuthority> CreatedUserRoleAuthorities { get; set; }
+        public ICollection<RoleAuthority> UpdatedUserRoleAuthorities { get; set; }
+        public ICollection<RoleAuthority> DeletedUserRoleAuthorities { get; set; }
 
         public User()
         {
