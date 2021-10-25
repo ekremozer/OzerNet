@@ -21,7 +21,6 @@ namespace OzerNet.WepApi.CommandHandlers.Users
         public override dynamic Handle(GetUser command)
         {
             var user = _userManager.GetUser(command);
-            
             return user;
         }
     }
